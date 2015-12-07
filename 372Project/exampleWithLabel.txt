@@ -1,0 +1,22 @@
+; Calculate the sum of all odd numbers from 1 to 10, then subtract the sum from
+; variable A stored in memory location 1000. Do not need to consider overflow.
+
+		.ORIG 2000
+		lw $a0, 1000($zero) ;$a0 = A
+
+;find the sum of odd numbers from 1 to 10
+
+		;setup registers
+		addi $t0, $zero, 11   ;$t0 = 11, use for comparing $a2
+		add $a1, $zero, $zero ;$a1 = 0
+		addi $a2, $zero, 1	  ;$a2 = 1
+loop:	add $a1, $a1, $a2	  ;$a1 = $a1 + $a2
+		addi $a1, $a1, 2	  ;increments by 2
+		beq $t0, $a1, done	  
+		beq $zero, $zero, loop
+	
+done:	nand $a2, $a1, $a1 ;$a2 = 1’s complement of sum
+		addi $a2, $a2, 1 ;$a2 = 2’s complement of sum = -sum
+		add  $a0, $a0, $a2 ;$a0 = A + (-sum) = A - sum
+		sw $a0, 1000($zero) ;A = A – sum
+		.END
