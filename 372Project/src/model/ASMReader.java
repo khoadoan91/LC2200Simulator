@@ -34,7 +34,7 @@ public class ASMReader {
 					String[] str = line.split(" ");  
 					int addStart = Integer.decode(str[1]);
 					result.setProgramCntr(addStart);
-					startProgram = true;
+					startProgram = true; // TODO set simulator starting address.
 					continue;
 				} else if (blkw.toUpperCase().startsWith("END")) {
 					// TODO end program, do something

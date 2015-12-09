@@ -1,9 +1,0 @@
-;
-; Test file which increments $s0 from 1 to 10
-;
-addi $s0, $zero, 1          ; set s0 to 1
-addi $s1, $zero, 10         ; set s1 to 10 (loop lim)
-loop: addi $s0, $s0, 1      ; increment s0
-sw $s0, 10000($zero)        ; output the number
-bne $s0, $s1, loop          ; loop if we're not at 10
-

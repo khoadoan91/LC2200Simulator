@@ -3,24 +3,32 @@ package model;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author KyleD
  */
 public class Program {
-	int programCntr = 0;
-    List<EncodedInstruction> encodedProgram;
-    LinkedHashMap<String, Instruction> program;
-    int ulCount = 0;
+	private int startingAddr;
+	private int programCntr = 0;
+    private List<EncodedInstruction> encodedProgram;
+    private Map<String, Instruction> program;
+    private int ulCount = 0;
     
     public Program(int address) {
     	programCntr = address;
     }
     
     public void setProgramCntr(int address) {
+    	startingAddr = address;
     	programCntr = address;
+    }
+    
+    public int getStartingAddress() {
+    	return startingAddr;
     }
     
     /**
@@ -33,7 +41,7 @@ public class Program {
         }
 
         if (program == null) {
-            program = new LinkedHashMap<>(128);
+            program = new HashMap<>(128);
             encodedProgram = null;
         }
 

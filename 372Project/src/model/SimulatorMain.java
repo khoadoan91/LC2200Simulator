@@ -8,6 +8,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Scanner;
 
 /**
  * @author KyleD
@@ -28,6 +29,14 @@ public class SimulatorMain {
                 System.out.println(enc.toBinaryString());
                 System.out.println(enc.toHexString());
             }
+			Simulator lc2200 = new Simulator(program.getStartingAddress());
+			lc2200.setProgram(program);
+			Scanner scan = new Scanner(System.in);
+			while (scan.nextInt() == 1) {
+				System.out.println(lc2200.getCurrentInstruction());
+				lc2200.runNext();
+			}
+			scan.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

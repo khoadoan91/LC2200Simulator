@@ -5,39 +5,27 @@ import java.io.PrintStream;
 /**
  * @author KyleD
  */
-public interface RegisterFile {
+public class RegisterFile {
+	
+	private int[] myRegisters;
 	
 	/**
-     * Set all registers to 0
-     */
-    void clear();
+	 * Create an empty registers file
+	 */
+	public RegisterFile() {
+		myRegisters = new int[Register.REGISTER_COUNT];
+		for (int i = 0; i < myRegisters.length; i++) 
+			myRegisters[i] = 0;
+	}
 
-    /**
-     * Get the contents of the register file. The array has 16 elements
-     * @return
-     */
-    int[] registerContents();
-
-    /**
-     * Dump register contents
-     * @param out
-     */
-    void dump(PrintStream out);
-
-    /**
-     * Get a register value
-     * @param reg
-     * @return
-     */
-    int get(Register reg);
-
-    /**
-     * Set a register value
-     * @param register destination
-     * @param value new value
-     * @return the old value
-     */
-    int set(Register register, int value);
- 
-    RegisterFile clone();
+	public int get(Register reg) {
+		return myRegisters[reg.getNumber()];
+	}
+	
+	public void set(Register reg, int value) {
+		// zero is not allowed to changed.
+		if (reg != Register.zero) {
+			myRegisters[reg.getNumber()] = value;
+		}
+	}
 }
