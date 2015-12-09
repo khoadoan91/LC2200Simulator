@@ -34,7 +34,7 @@ public class SimulatorMain {
 			Scanner scan = new Scanner(System.in);
 			while (scan.nextInt() == 1) {
 				System.out.println(lc2200.getCurrentInstruction());
-				lc2200.runNext();
+				lc2200.runProcessor();
 			}
 			scan.close();
 		} catch (IOException e) {

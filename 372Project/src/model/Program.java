@@ -16,7 +16,6 @@ public class Program {
 	private int programCntr = 0;
     private List<EncodedInstruction> encodedProgram;
     private Map<String, Instruction> program;
-    private int ulCount = 0;
     
     public Program(int address) {
     	programCntr = address;
@@ -41,7 +40,7 @@ public class Program {
         }
 
         if (program == null) {
-            program = new HashMap<>(128);
+            program = new LinkedHashMap<>(128);
             encodedProgram = null;
         }
 

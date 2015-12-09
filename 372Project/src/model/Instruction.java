@@ -247,7 +247,8 @@ public class Instruction extends EncodedInstruction {
     public String toString() {
         // max width is "$zero,  1048575($zero)" = 22 chars (never gonna happen)
 //        return String.format("%10s %04x  %-5s %-25s %s", (label == null ? "" : label + ":"), address, getName(), getArgsString(), (comment == null || comment.isEmpty() ? "" : ";" + comment));
-        return String.format("%10s %04d  %-5s %-25s %s", (label == null ? "" : label + ":"), address, getName(), getArgsString(), (comment == null || comment.isEmpty() ? "" : ";" + comment));
+//        return String.format("%10s %04d  %-5s %-25s %s", (label == null ? "" : label + ":"), address, getName(), getArgsString(), (comment == null || comment.isEmpty() ? "" : ";" + comment));
+    	return String.format("%6s %04d  %-5s %-25s", (label == null ? "" : label + ":"), address, getName(), getArgsString());
     }
 
     /**

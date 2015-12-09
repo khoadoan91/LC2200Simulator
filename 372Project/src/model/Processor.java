@@ -3,36 +3,52 @@ package model;
 import java.util.List;
 
 public class Processor {
-	private int pc;
+	private int myPC;
 	private EncodedInstruction myCurrentInst;
 	private List<EncodedInstruction> myProgram;
 	private Memory myMemory;
 	private RegisterFile myRegs;
 	
-	public Processor(int startAddress, List<EncodedInstruction> theProgram) {
-		pc = startAddress;
+	public Processor(List<EncodedInstruction> theProgram, RegisterFile theRegs, Memory theMemory) {
+		myPC = 0;
 		this.myProgram = theProgram;
-		myMemory = new Memory();
-		myRegs = new RegisterFile();
+		myMemory = theMemory;
+		myRegs = theRegs;
 	}
 	
 	public boolean runNext() {
-		if (pc < 0) return false;
-		if (pc >= myProgram.size()) {
-			pc = 0;
+		if (myPC < 0) return false;
+		if (myPC >= myProgram.size()) {
+			myPC = -1;
 			return false;
 		}
-		myCurrentInst = myProgram.get(pc++);
+		myCurrentInst = myProgram.get(myPC++);
 		execute(myCurrentInst);
 		return true;
 	}
 	
 	public int getPC() {
-		return pc;
+		return myPC;
 	}
 	
 	public EncodedInstruction getCurrentInstruction() {
 		return myCurrentInst;
+	}
+	
+	public int[] getRegisterContents() {
+        return myRegs.registerContents();
+    }
+	
+	public int[][] getMemoryContents() {
+        return myMemory.memoryContents();
+    }
+	
+	public Memory getMemory() {
+        return myMemory;
+    }
+	
+	public RegisterFile getRegisters() {
+		return myRegs;
 	}
 	
 	public void execute(EncodedInstruction inst) {
@@ -53,8 +69,8 @@ public class Processor {
 		Register rx = inst.getRegisterX();
 		Register ry = inst.getRegisterY();
 		int x = myRegs.get(rx);
-		myRegs.set(ry, pc);
-		pc = x;
+		myRegs.set(ry, myPC);
+		myPC = x;
 	}
 
 	private void beq(EncodedInstruction inst) {
@@ -63,7 +79,7 @@ public class Processor {
 		int x = myRegs.get(rx);
 		int y = myRegs.get(ry);
 		int i = inst.getI();
-		if (x == y) pc = pc + i;
+		if (x == y) myPC = myPC + i;
 	}
 
 	private void sw(EncodedInstruction inst) {
